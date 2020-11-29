@@ -1,0 +1,110 @@
+<section>
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Login">
+            <mat-card class="login-card">
+                <mat-card-header>
+                    <mat-card-title>Welcome Back!</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="loginForm">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput formControlName="email" [formControl]="loginEmailFormControl" [errorStateMatcher]="matcher"
+                                   placeholder="Ex. pat@example.com">
+                            <mat-error *ngIf="loginEmailFormControl.hasError('email') && !loginEmailFormControl.hasError('required')">
+                                Please enter a valid email address
+                            </mat-error>
+                            <mat-error *ngIf="loginEmailFormControl.hasError('required')">
+                                Email is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter your password</mat-label>
+                            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </form>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button (click)="login()" [disabled]="!loginForm.valid" mat-raised-button color="primary">
+                        <mat-spinner *ngIf="isLoading" diameter="30" color="accent"></mat-spinner>
+                        <span *ngIf="!isLoading">LOGIN</span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Register">
+            <mat-card class="register-card">
+                <mat-card-header>
+                    <mat-card-title *ngIf="!isLoading">Glad to have You!</mat-card-title>
+                    <mat-card-title *ngIf="isLoading">Please Wait</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <form [formGroup]="registerForm" *ngIf="(!isLoading) && (!isRegistered)">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Username</mat-label>
+                            <input type="name" formControlName="name" matInput placeholder="Ex. Mustermann">
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input type="email" matInput formControlName="email" [formControl]="registerEmailFormControl" [errorStateMatcher]="matcher"
+                                   placeholder="Ex. pat@example.com">
+                            <mat-error *ngIf="registerEmailFormControl.hasError('email') && !registerEmailFormControl.hasError('required')">
+                                Please enter a valid email address
+                            </mat-error>
+                            <mat-error *ngIf="registerEmailFormControl.hasError('required')">
+                                Email is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter your password</mat-label>
+                            <input formControlName="password" matInput [type]="hide ? 'password' : 'text'" [formControl]="registerPasswordFormControl" [errorStateMatcher]="matcher">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('lessThanEight')">
+                                password should be atleast 8 character long
+                            </mat-error>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('atLeastOneDigit')">
+                                password should have atleast 2 Digits
+                            </mat-error>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('atLeastOneChar')">
+                                password should have atleast 2 UPPERcase and 2 lowercase Character
+                            </mat-error>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('atLeastOneSpecialChar')">
+                                password should have atleast 1 special character (!+-§$%&)
+                            </mat-error>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('noWhiteSpace')">
+                                password should have NOT have a whiteSpace
+                            </mat-error>
+                            <mat-error *ngIf="registerPasswordFormControl.hasError('required')">
+                                password is <strong>required</strong>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" [ngClass]="passwordMatch()">
+                            <mat-label>Enter your password again</mat-label>
+                            <input formControlName="passwordConfirmation" matInput [type]="hide ? 'password' : 'text'" formControlName="passwordConfirmation" [formControl]="registerPasswordConfirmationFormControl" [errorStateMatcher]="matcher">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="!classValidator.checkPasswordConfirmDirtyAndValid(registerForm)">
+                                password not match
+                            </mat-error>
+                        </mat-form-field>
+                    </form>
+                    <mat-spinner *ngIf="isLoading"></mat-spinner>
+                    <div *ngIf="(!isLoading) && (isRegistered)">
+                        <h3>Thank you for joining us!</h3>
+                        <p>Please go to your email, and click the verification link we send</p>
+                        <p>After you click the link, you can go to login, to go in</p>
+                    </div>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button *ngIf="showRegisterButton()" (click)="register()" [disabled]="!registerForm.valid" mat-raised-button color="primary">REGISTER</button>
+                </mat-card-actions>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+</section>

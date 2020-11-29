@@ -1,0 +1,62 @@
+.pbs-form-full-width{
+  width: 100%;
+}
+
+.pbs-span-link{
+  text-decoration: underline;
+  color: blue;
+  cursor: pointer;
+  font-weight: bolder;
+}
+
+.search-info{
+  margin-bottom: 50px;
+}
+
+mat-spinner{
+  margin: 15px auto;
+}
+
+.add-book{
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  padding-top: 30px;
+
+  .img{
+    width: 340px;
+    img{
+      width: 270px;
+      height: 370px;
+      margin: 0 35px;
+    }
+    button{
+      margin: 35px;
+      width: 270px;
+      height: 70px;
+    }
+  }
+
+  form{
+    width: 100%;
+    padding: 0 30px;
+    display: flex;
+    flex-direction: column;
+
+    input{
+      width: 100%;
+      margin: 10px;
+    }
+  }
+
+
+}
+
+.alert-info{
+  border-radius: 5px;
+  background: #CCE5FF;
+  width: 100%;
+  padding: 15px;
+  text-align: center;
+  vertical-align: center;
+}

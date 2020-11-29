@@ -1,0 +1,28 @@
+<div id="pbs-dashboard-titlebar">
+    <h1>CodeCamp Library</h1>
+    <button mat-fab color="primary" aria-label="Add Book To Your Library" matTooltip="Add More Books to your Library" routerLink="/addbook">
+        <mat-icon inline="true">add</mat-icon>
+        <p>Add Book</p>
+    </button>
+</div>
+
+<div id="pbs-main-dashboard">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div *ngIf="!isLoading" class="card-container">
+        <mat-card class="book-card" *ngFor="let book of books">
+            <img mat-card-image [src]="book.coverUrl" alt="Photo of a Shiba Inu">
+            <mat-card-header>
+                <mat-card-title>{{book.title}}</mat-card-title>
+                <mat-card-subtitle>{{book.author}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <p>
+                    {{book.desc}}
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="selectBook(book.id)">View This Book</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

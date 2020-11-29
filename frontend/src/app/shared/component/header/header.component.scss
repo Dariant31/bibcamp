@@ -1,0 +1,28 @@
+mat-toolbar {
+  padding: 0 70px;
+  height: 90px;
+  display: flex;
+  justify-content: space-between;
+
+  img {
+    width: 90px;
+    cursor: pointer;
+  }
+
+  #pbs-user-toolbar{
+    vertical-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    font-size: 35px;
+    mat-icon{
+      margin-top: 10px;
+      height: 35px;
+      &:hover{
+        cursor: pointer;
+        color: black;
+      }
+    }
+  }
+}

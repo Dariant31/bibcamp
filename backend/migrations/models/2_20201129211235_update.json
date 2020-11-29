@@ -1,0 +1,10 @@
+{
+  "upgrade": [
+    "ALTER TABLE `books` MODIFY COLUMN `genre` VARCHAR(300) NOT NULL",
+    "ALTER TABLE `books` MODIFY COLUMN `desc` LONGTEXT NOT NULL"
+  ],
+  "downgrade": [
+    "ALTER TABLE `books` MODIFY COLUMN `genre` LONGTEXT NOT NULL",
+    "ALTER TABLE `books` MODIFY COLUMN `desc` VARCHAR(300) NOT NULL"
+  ]
+}

@@ -1,0 +1,6 @@
+<mat-toolbar color="primary">
+    <img (click)="goToDashboard()" src="assets/img/logo.png"/>
+    <div id="pbs-user-toolbar" *ngIf="authUtils.isLoggedIn()">
+        <mat-icon inline="true" color="accent" matTooltip="Logout" (click)="logOut()">power_settings_new</mat-icon>
+    </div>
+</mat-toolbar>

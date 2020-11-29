@@ -1,0 +1,55 @@
+.book-details-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 100vh;
+
+  .img-col{
+    display: flex;
+    width: 450px;
+    flex-direction: column;
+    justify-content: flex-start;
+    img{
+      width: 200px;
+      margin: 0 auto;
+    }
+  }
+
+  .info-col{
+    width: 700px;
+    h1{
+      font-size: 30px;
+      margin-bottom: 0;
+    }
+    h2{
+      font-size: 15px;
+      margin-top: 0;
+    }
+
+    .tab-info{
+      padding: 30px;
+    }
+
+    .tab-history{
+      .book-status{
+        background: tomato;
+        padding: 5px 15px;
+        border-radius: 5px;
+        &.ONGOING{
+          background: #CCE5FF;
+        }
+        &.COMPLETED{
+          background: #D4EDDA;
+        }
+      }
+    }
+  }
+}
+table{
+  width: 100%;
+}
+mat-spinner{
+  margin: 250px auto;
+}
+
+

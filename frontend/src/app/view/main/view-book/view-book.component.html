@@ -1,0 +1,61 @@
+<div class="book-details-container" *ngIf="!isLoading">
+    <div class="img-col">
+        <img [src]="selectedBook.coverUrl" alt="">
+        <button *ngIf="!bookDetailsResponse.isBorrowed" mat-raised-button color="primary" style="margin-top: 30px;height: 50px;">Borrow this Book</button>
+        <button *ngIf="bookDetailsResponse.isBorrowed" mat-raised-button color="primary" style="margin-top: 30px;height: 50px;" disabled>Book Currently Unavailable</button>
+    </div>
+    <div class="info-col">
+        <h1>{{selectedBook.title}}</h1>
+        <h2>By {{selectedBook.author}}</h2>
+        <p>{{selectedBook.desc}}</p>
+        <mat-tab-group mat-stretch-tabs>
+            <mat-tab label="Info">
+                <div class="tab-info">
+                    <p><strong>ISBN : </strong> {{selectedBook.isbn}}</p>
+                    <p><strong>Language : </strong> {{selectedBook.language}}</p>
+                    <p><strong>genre : </strong> {{selectedBook.genre}}</p>
+                    <p><strong>Publisher : </strong> {{selectedBook.publisher}}</p>
+                    <p><strong>Desc : </strong> {{selectedBook.desc}}</p>
+                </div>
+            </mat-tab>
+            <mat-tab label="History">
+                <table mat-table [dataSource]="dataSource" class="tab-history" matSort>
+
+                    <!-- No. Column -->
+                    <ng-container matColumnDef="Position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> No.</th>
+                        <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
+                    </ng-container>
+
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="Name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                    <!-- From Column -->
+                    <ng-container matColumnDef="From">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> From</th>
+                        <td mat-cell *matCellDef="let element"> {{element.fromUNIX * 1000 | date:'dd/MM/yyyy'}} </td>
+                    </ng-container>
+
+                    <!-- Until Column -->
+                    <ng-container matColumnDef="Until">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Until</th>
+                        <td mat-cell *matCellDef="let element"> {{element.untilUNIX * 1000 | date:'dd/MM/yyyy'}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="Status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
+                        <td mat-cell *matCellDef="let element"> <span class="book-status {{element.status}}">{{element.status}}</span> </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumn;"></tr>
+                </table>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>
+<mat-spinner *ngIf="isLoading"></mat-spinner>

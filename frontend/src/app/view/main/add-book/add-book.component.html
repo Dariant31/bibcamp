@@ -1,0 +1,108 @@
+<h1>Add Book</h1>
+<h3>follow the steps here to add book to your library</h3>
+
+<mat-horizontal-stepper linear #stepper>
+    <mat-step [editable]="false">
+        <ng-template matStepLabel>Search Book</ng-template>
+        <div class="search-info">
+            <h3>Please Search the book you want to add first in here</h3>
+            <p>in case we already have the book in our database, so we dont have to import the same book multiple
+                times</p>
+        </div>
+
+        <form [formGroup]="searchBookFormGroup">
+
+            <div class="search" *ngIf="!resultAvailable">
+                <mat-form-field class="pbs-form-full-width" *ngIf="!isLoading">
+                    <mat-label>Please enter book <span *ngIf="searchByISBN">ISBN</span> <span
+                            *ngIf="!searchByISBN">Title</span></mat-label>
+                    <input [type]="this.searchByISBN?'number':'text'" matInput formControlName="search"
+                           [placeholder]="this.searchByISBN?'Ex. 9789832672364':'Ex. The Lord Of The Ring'">
+                    <button mat-icon-button matSuffix (click)="search()">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                    <mat-hint align="start"><strong><span *ngIf="searchByISBN">dont know the book ISBN? </span>
+                        <span
+                                class="pbs-span-link" (click)="toggleSearchType()"><span *ngIf="searchByISBN">Search by Title</span><span
+                                *ngIf="!searchByISBN">Search by ISBN</span></span></strong></mat-hint>
+                </mat-form-field>
+            </div>
+
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+            <div class="search-result" *ngIf="resultAvailable">
+                <div *ngIf="bookSearchResponse.isInLocalDb">
+                    <h4>We Already have this book in Our library!</h4>
+                    <p>Lets go to the dashboard to find them</p>
+                    <button mat-raised-button color="primary" matStepperNext routerLink="/dashboard">Go To
+                        Dashboard
+                    </button>
+                </div>
+
+                <div *ngIf="bookSearchResponse.isInNet">
+                    <h4>We dont have this book, yet</h4>
+                    <p>Lets add this book to our Library using the Add Book Form</p>
+                    <button mat-raised-button color="primary" matStepperNext>Fill Add Book Form</button>
+                </div>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="addBookFormGroup" [editable]="true">
+        <ng-template matStepLabel>Fill out AddBook Form</ng-template>
+        <div class="add-book">
+            <div class="img">
+                <img [src]="addBookFormGroup.get('coverUrl').value" alt="">
+                <button mat-raised-button color="primary" (click)="addBook()" matStepperNext>Add This Book</button>
+            </div>
+            <form [formGroup]="addBookFormGroup">
+                <div class="alert-info" *ngIf="showFoundHint">
+                    <p><strong>We found the book you search on the internet!</strong> Please check again if the
+                        information we found is correct</p>
+                </div>
+                <mat-form-field style="margin-top: 15px">
+                    <mat-label>Title</mat-label>
+                    <input type="text" formControlName="title" matInput placeholder="Ex. Lord Of The Ring">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>ISBN</mat-label>
+                    <input type="number" matInput formControlName="isbn" placeholder="Ex. 978198451901">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Author</mat-label>
+                    <input type="text" formControlName="author" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Language</mat-label>
+                    <input type="text" formControlName="language" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Genre</mat-label>
+                    <input type="text" formControlName="genre" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>desc</mat-label>
+                    <textarea type="text" formControlName="desc" matInput></textarea>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Publisher</mat-label>
+                    <input type="text" formControlName="publisher" matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>CoverUrl</mat-label>
+                    <input type="text" formControlName="coverUrl" matInput>
+                </mat-form-field>
+            </form>
+        </div>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <div class="done">
+            <mat-spinner *ngIf="isLoading"></mat-spinner>
+            <div class="alert-info" *ngIf="!isLoading && addBookSucess">
+                <h1>The Book Added To your Library</h1>
+                <p>Go to your dashboard to see it</p>
+                <button mat-raised-button color="primary" routerLink="/dashboard" matStepperNext>Go To Dashboard</button>
+            </div>
+        </div>
+    </mat-step>
+</mat-horizontal-stepper>
